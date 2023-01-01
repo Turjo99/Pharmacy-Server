@@ -23,9 +23,16 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const collection = client.db("pharmadb").collection("products");
+    const membercollection = client.db("pharmadb").collection("members");
     app.get("/products", async (req, res) => {
       const query = {};
       const cursor = collection.find(query);
+      const item = await cursor.toArray();
+      res.send(item);
+    });
+    app.get("/members", async (req, res) => {
+      const query = {};
+      const cursor = membercollection.find(query);
       const item = await cursor.toArray();
       res.send(item);
     });
